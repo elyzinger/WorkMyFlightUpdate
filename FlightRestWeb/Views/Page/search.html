@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>SearchPage</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../Content/myCSS.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4edded5925.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <nav class="nav nav-pills justify-content-center flex-column flex-sm-row mynav">
+        <h4><a class="nav-link" title="show all departures" href="http://localhost:63743/page/GetDeparturesFlights">Departures</a></h4>
+        <h4><a class="nav-link" title="show all arriving flights" href="http://localhost:63743/page/GetLandingFlights">Arrivels</a></h4>
+        <form class="form-inline myForm">
+            <input class="form-control mr-sm-2 inpSrch" type="text" id="srchT" onclick="unable()" placeholder="Search">
+            <div class="input-group-append">
+                <select id="options" class="custom-select listSrch">
+                    <option value="selected" selected>Select Option...</option>
+                    <option value="airlineName">search by airline name</option>
+                    <option value="destinationCountry">search by destination country</option>
+                    <option value="originCountry">search by origin country</option>
+                    <option value="flightNum">search by flight number</option>
+                </select>
+                <button class="btn btn-outline-success my-2 my-sm-0 btnsearch" id="btnSrch" onclick="onSearchClick()" type="button">Search</button>
+                <input type="checkbox" id="landingCheck" />
+                <label class="chkbox1 checkBall" for="landingSearch"> </label><br>
+                <input type="checkbox" id="departCheck" />
+                <label class="chkbox2 checkBall" for="departureSearch"> </label><br>
+            </div>
+        </form>
+    </nav>
+  
+    <h1><span class="badge badge-secondary myweb">Work My Flight</span></h1>
+    <p><h1 class="pageName" align="center" style="color:goldenrod;">"Search Results"</h1></p>
+    <div class="table-responsive">
+        <table id="flightTableSearch" class="table table-striped table-dark"></table>
+    </div>
+    <script type="text/javascript"  src="../../Scripts/search.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+﻿<!-- angular part page -->
+<html ng-app="homePage">
+<head>
+    <!-- all the cdn for the page -->
+    <script src="../../Scripts/angular.js"></script>
+    <script src="../../Scripts/bootstrapAngular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../Content/myCSSAngular.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4edded5925.js" crossorigin="anonymous"></script>
+
+    <title>angular</title>
+
+</head>
+
+<!--body part nav bar -->
+<body class="bodyAngular">
+    <h1><span class="myWebLogo">Work My Flight <img src="../../Content/airlineLogo/logo1.jpg" style="height:23px; width:25px; border-radius:50%;" /> </span></h1>
+    <nav class="nav nav-pills justify-content-center flex-column flex-sm-row mynav">
+        <h4> <a class="nav-link home active" title="home" href="http://localhost:61909/page/Angular">Home <i class="fas fa-home"></i> </a> </h4>
+        <h4> <a class="nav-link departure " title="create customer" href="http://localhost:61909/page/GetDeparturesFlights"> Create Customer</a> </h4>
+        <h4> <a class="nav-link arriving" title="create airline" href="http://localhost:61909/page/GetLandingFlights"> Create Airline</a> </h4>
+    </nav>
+    <!-- login form -->
+    <button class="open-button login" ng-click="openFormLogin()"> Login </button>
+    <div class="form-popup" id="login">
+        <form ng-submit="SubmitLogin()" class="form-container">
+            <h1> Login</h1>
+
+            <!--<label for="user name"> <b> User Name</b> </label>-->
+            <input type="text" placeholder="Enter User Name" name="username" ng-model="login.username" required>
+
+            <!--<label for="psw"> <b> Password</b> </label>-->
+            <input type="password" placeholder="Enter Password" ng-model="login.pwd" name="psw" required>
+
+            <button type="submit" class="btn"> Login</button>
+            <button type="button" class="btn cancel" onclick="closeForm()"> Close</button>
+
+            <p><a onclick="openFormCustomer()" href="">New Customer Sign up</a></p>
+            <p> <a onclick="openFormAirlline()" href="">New Airline Sign up</a></p>
+
+        </form>
+    </div>
+    <!-- customer registration form-->
+    <div class="form-popup" ng-controller="customerCtrl" id="customerForm">
+        <form ng-submit="SubmitCustomer(customer)" class="form-container">
+            <h1> Create New Customer</h1>
+
+            <!--<label for="FirstName"> <b>First Name</b> </label>-->
+            <input type="text" placeholder="Enter First Name" name="FirstLastName" ng-model="customer.firstName" required>
+
+            <!--<label for="LastName"> <b>Last Name</b> </label>-->
+            <input type="text" placeholder="Last Name" name="FirstLastName" ng-model="customer.lastName" required>
+
+
+            <!--<label for="UserName"> <b> UserName</b> </label>-->
+            <input type="text" placeholder="UserName" name="UserName" ng-model="customer.userName" required>
+
+            <!--<label for="psw"> <b> Password</b> </label>-->
+            <input type="password" placeholder="Password" name="psw" ng-model="customer.password" required>
+            <input type="password" placeholder="Confirm Password" name="psw" ng-model="customer.ConfPwd" required>
+
+            <!--<label for="email"> <b> Email</b> </label>-->
+            <input type="email" placeholder="Email" name="email" ng-model="customer.email" required>
+
+            <!--<label for="Address"> <b> Address</b> </label>-->
+            <input type="text" placeholder="Address" name="Address" ng-model="customer.address" required>
+
+            <!--<label for="PhoneNumber"> <b> Phone Number</b> </label>-->
+            <input type="text" placeholder="Phone Number" name="PhoneNumber" ng-model="customer.phoneNumber" required>
+
+            <!--<label for="CreditCardNumber"> <b> Credit Card Number</b> </label>-->
+            <input type="text" placeholder="CC Number - DATE - CVV" data-mask="0000 0000 0000 0000 00/00 0000" name="CreditCardNumber" ng-model="customer.creditCardNumber" required>
+
+            <button type="submit" class="btn"> Register</button>
+            <button type="button" class="btn cancel" onclick="closeFormCustomer()"> Close</button>
+            <p><a ng-click="openFormLogin()" href="">Back To Login</a></p>
+        </form>
+    </div>
+<!-- airline registration form -->
+    <div class="form-popup" ng-controller="airlineCtrl" id="myForm2">
+        <form ng-submit="SubmitAirline(airline)" class="form-container">
+            <h1> Create New Airline</h1>
+
+            <!--<label for="CompanyName"> <b> CompanyName</b> </label>-->
+            <input type="text" placeholder=" CompanyName" name="companyName" ng-model="airline.airLineName" required>
+
+            <!--<label for="UserName"> <b> UserName</b> </label>-->
+            <input type="text" placeholder=" UserName" name="userName" ng-model="airline.userName" required>
+
+            <!--<label for="psw"> <b> Password</b> </label>-->
+            <input type="password" placeholder="Password" name="psw" ng-model="airline.password" required>
+            <input type="password" placeholder="Confirm Password" name="psw" ng-model="airline.confPwd" required>
+
+            <!--<label for="email"> <b> Email</b> </label>-->
+            <input type="email" placeholder=" Email" name="email" ng-model="airline.email" required>
+
+            <input type="number" placeholder="Country Code" name="userName" ng-model="airline.countryCode" required>
+
+
+            <button type="submit" class="btn"> Register</button>
+            <button type="button" class="btn cancel" onclick="closeFormAirline()"> Close</button>
+            <p><a ng-click="openFormLogin()" href="">Back To Login</a></p>
+        </form>
+    </div>
+    <!-- form for flight search to buy *not finished -->
+    <div class="section-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="booking-cta">
+                        <h1> Book your flight today</h1>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laboriosam numquam at</p>
+                    </div>
+                </div>
+                <div class="col-md-7 col-md-offset-1">
+                    <div class="booking-form">
+                        <form>
+                            <div class="form-group">
+                                <div class="form-checkbox">
+                                    <label for="roundtrip">
+                                        <input type="radio" id="roundtrip" name="flight-type">
+                                        <span> </span> Roundtrip
+                                    </label>
+                                    <label for="one-way">
+                                        <input type="radio" id="one-way" name="flight-type">
+                                        <span> </span> One way
+                                    </label>
+                                    <label for="multi-city">
+                                        <input type="radio" id="multi-city" name="flight-type">
+                                        <span> </span> Multi-City
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span class="form-label"> Flying from</span>
+                                        <input class="form-control" type="text" placeholder="City or airport">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span class="form-label"> Flyning to</span>
+                                        <input class="form-control" type="text" placeholder="City or airport">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span class="form-label"> Departing</span>
+                                        <input class="form-control" type="date" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span class="form-label"> Returning</span>
+                                        <input class="form-control" type="date" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span class="form-label"> Adults (18+)</span>
+                                        <select class="form-control">
+                                            <option> 1</option>
+                                            <option> 2</option>
+                                            <option> 3</option>
+                                        </select>
+                                        <span class="select-arrow"> </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span class="form-label"> Children (0-17)</span>
+                                        <select class="form-control">
+                                            <option> 0</option>
+                                            <option> 1</option>
+                                            <option> 2</option>
+                                        </select>
+                                        <span class="select-arrow"> </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span class="form-label"> Travel class</span>
+                                        <select class="form-control">
+                                            <option> Economy class</option>
+                                            <option> Business class</option>
+                                            <option> First class</option>
+                                        </select>
+                                        <span class="select-arrow"> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn"> Show flights</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- form after card clicking for react  -->
+    <div ng-controller="cardCtrl">
+        <div class="chooseCardwrapper">
+            <div class="chooseCardPayment" id="cardPaymentStyle">
+                <h4 class="icon-relative"> FLIGHT SUMMARY <i class="fas fa-paper-plane"></i></h4>
+                <div class="formCard icon-relative">
+                    <label class="label">"WorkMyFlight"</label>
+                    <img class="cardFormPic space" src="../../Content/countryPic/main 3.jpg" />
+                    <div class="cardGroup1 space" style="font-size:22px;">
+                        <label class="label1 space" name="From"> <i class="fas fa-plane-departure"> {{apiResult.cards[0].OriginCountryName}} </i></label>
+                        <label class="label1 space" style="margin-left:22%; margin-right:22%">&nbsp; <i class="fas fa-long-arrow-alt-right"></i> &nbsp; </label>
+                        <label class="label1 space" style="font-weight: bold;" name="To"> {{apiResult.cards[0].DestinationCountryName}} <i class="fas fa-plane-arrival"></i></label>
+                    </div>
+                    <div class="cardGroup2 space">
+                        <label class="passengers">Number Of Passengers:</label>
+                        <div class="cardItem space" style="margin-right:10%">
+                            <label class="label"><i class="fas fa-male">&emsp;</i><i class="fas fa-female"></i></label>
+                            <input type="number" placeholder="0" name="adult" data-mask="0" class="input">
+                        </div>
+                        <div class="cardItem">
+                            <label class="label"><i class="fas fa-child">(2-11)</i></label>
+                            <input type="number" placeholder="0" name="child" data-mask="0" class="input">
+                        </div>
+                    </div>
+                    <label class="label" style="margin-bottom:20px;">Price "" You Save....</label>
+                    <div class="btnGroup">
+                        <button ng-click="Back()" class="cardBtnBak button">Close <i class="fas fa-times-circle"></i></button>
+                        <button ng-click="BuyTicket()" class="cardBtnBuy space button">Buy Ticket <i class="fas fa-shopping-cart"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cards for future flights promotion -->
+        <div>
+            <div class="card-group">
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[0].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"> Flight To {{apiResult.cards[0].DestinationCountryName}}</h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[0].OriginCountryName}} To {{apiResult.cards[0].DestinationCountryName}} On Date: {{apiResult.cards[0].DepartureTime | date:'medium'}}</p>
+                        <p class="card-text"> <small class="text-muted"> 5 days. limit Offer!!! </small> </p>
+                    </div>
+                </div>
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[1].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Flight To {{apiResult.cards[1].DestinationCountryName}} </h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[1].OriginCountryName}} To {{apiResult.cards[1].DestinationCountryName}} On Date: {{apiResult.cards[1].DepartureTime | date:'medium'}}</p>
+                        <p class="card-text"><small class="text-muted">  5 Days. limited Offer!!! </small></p>
+                    </div>
+                </div>
+
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[2].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">  Flight To {{apiResult.cards[2].DestinationCountryName}}</h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[2].OriginCountryName}} To {{apiResult.cards[2].DestinationCountryName}} On Date: {{apiResult.cards[2].DepartureTime | date:'medium'}}</p>
+                        <p class="card-text"> <small class="text-muted">  5 Days. limited Offer!!! </small> </p>
+                    </div>
+                </div>
+            </div>
+            <divng class="card-group">
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[3].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Flight To {{apiResult.cards[3].DestinationCountryName}}</h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[3].OriginCountryName}} To {{apiResult.cards[1].DestinationCountryName}} On Date: {{apiResult.cards[3].DepartureTime | date:'medium' }}</p>
+                        <p class="card-text"> <small class="text-muted">  5 Days. limited Offer!!!</small> </p>
+                    </div>
+                </div>
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[4].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Flight To {{apiResult.cards[4].DestinationCountryName}}</h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[4].OriginCountryName}} To {{apiResult.cards[1].DestinationCountryName}} On Date: {{apiResult.cards[4].DepartureTime | date:'medium' }}</p>
+                        <p class="card-text"> <small class="text-muted">  5 Days. limited Offer!!!</small> </p>
+                    </div>
+                </div>
+                <div ng-click="PickFlight()" class="card">
+                    <img class="card-img-top" ng-src="/Content/countryPic/{{apiResult.cards[5].DestinationCountryName}}.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Flight To {{apiResult.cards[5].DestinationCountryName}}</h5>
+                        <p class="card-text"> Departing From {{apiResult.cards[5].OriginCountryName}} To {{apiResult.cards[1].DestinationCountryName}} On Date: {{apiResult.cards[5].DepartureTime | date:'medium'}}</p>
+                        <p class="card-text"> <small class="text-muted"> 5 Days. limited Offer!!!</small> </p>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--future link for my website with resume -->
+    <h4 class="ely">  קישור לאתר של איליי </h4>
+    <!-- links for other countrys same website *not ready -->
+    <div class="crossLinking">
+        <header>
+            <h4 class="crossLinking-title">  other countrys sites </h4>
+        </header>
+        <div class="croosLinking-box">
+            <a class="crossLinking-box-item" href="" id="crosslinking0"> <div> <span> <img src="/Content/flagsPic/franceflag.jpg" width="15" height="15"> <strong> France Workmyflight </strong> </span> </div></a>
+            <a class="crossLinking-box-item" href="" id="crosslinking0"> <div> <span> <img src="/Content/flagsPic/australiaflag.jpg" width="15" height="15"> <strong> Austraia Workmyflight </strong> </span> </div></a>
+            <a class="crossLinking-box-item" href="" id="crosslinking0"> <div> <span> <img src="/Content/flagsPic/israelflag.jpg" width="15" height="15"> <strong> Israel Workmyflight </strong> </span> </div></a>
+            <a class="crossLinking-box-item" href="" id="crosslinking0"> <div> <span> <img src="/Content/flagsPic/spainflag.jpg" width="15" height="15"> <strong> spain Workmyflight </strong> </span> </div></a>
+            <a class="crossLinking-box-item" href="" id="crosslinking0"> <div> <span> <img src="/Content/flagsPic/japanflag.jpg" width="15" height="15"> <strong> Japan Workmyflight </strong> </span> </div></a>
+        </div>
+    </div>
+    <!-- all the ctrls used in this page -->
+    <script src="../../Scripts/ctrl/Services.js"></script>
+    <script src="../../Scripts/ctrl/customerCtrl.js"></script>
+    <script src="../../Scripts/ctrl/airlineCtrl.js"></script>
+    <script src="../../Scripts/ctrl/cardCtrl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+</body>
+</html>

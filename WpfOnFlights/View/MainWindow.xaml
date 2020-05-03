@@ -1,0 +1,54 @@
+﻿<Window x:Class="WpfOnFlights.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfOnFlights"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="520.137"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.Resources>
+        <DataTemplate x:Key="FlightTemplate">
+            <StackPanel Orientation="Vertical">
+                <Label Content="{Binding Name}"/>
+                <Label Content="{Binding Vacancy}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid Margin="0,0,0,54">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="176*"/>
+            <RowDefinition Height="189*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="User" Background="PaleGoldenrod" HorizontalAlignment="Left" Height="35" Margin="198,68,0,0" TextWrapping="Wrap" Text="user name" VerticalAlignment="Top" Width="147"/>
+        <TextBox x:Name="Password" Background="PaleGoldenrod" HorizontalAlignment="Left" Height="35" Margin="198,120,0,0" TextWrapping="Wrap" Text="password" VerticalAlignment="Top" Width="147"/>
+        <!--<Button x:Name="Login" Background="Orange" Content="login" HorizontalAlignment="Left" Margin="42,28,0,0" VerticalAlignment="Top" Width="178" Height="52" Click="Button_Click" Grid.Row="1"/>-->
+        <Border x:Name="Greenlight" Background="Red" BorderBrush="Aqua" BorderThickness="1" HorizontalAlignment="Left" Height="36" Margin="42,28,0,0" VerticalAlignment="Top" Width="111">
+            
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="Red"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName= Login, Path=IsPressed}" Value="True" >
+                            <Setter Property="Background" Value="Green"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <Border x:Name="Greenlight2"  BorderBrush="Aqua" BorderThickness="1" HorizontalAlignment="Left" Height="36" Margin="42,88,0,0" VerticalAlignment="Top" Width="111"
+                Background="{Binding logincommand }" >
+                
+        </Border>
+        <!--<Button Content="Delegate" HorizontalAlignment="Left" Margin="152,268,0,0" VerticalAlignment="Top" Width="179" Height="30"
+                Command="{Binding MyDelegate, Source={StaticResource vm}}"/>-->
+        
+    </Grid>
+</Window>

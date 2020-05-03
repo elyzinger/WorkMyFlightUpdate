@@ -1,0 +1,22 @@
+﻿<!--form not finished-->
+<div ng-controller="" id="myForm1">
+    <form action="/action_page.php" class="form-container">
+        <h1> Create New Customer</h1>
+
+        <label for="FirstLastName"> <b> First And LastName</b> </label>
+        <input type="text" placeholder="Enter First And LastName" name="FirstLastName" required>
+
+        <label for="UserName"> <b> UserName</b> </label>
+        <input type="text" placeholder="Enter UserName" name="UserName" required>
+
+        <label for="psw"> <b> Password</b> </label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+        <label for="email"> <b> Email</b> </label>
+        <input type="email" placeholder="Enter Email" name="email" required>
+
+        <button type="submit" class="btn"> Submit</button>
+        <button type="button" class="btn cancel" onclick="closeFormCustomer()"> Close</button>
+        <p><a href="#">New Customer Sign up</a></p>
+    </form>
+</div>

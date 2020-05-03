@@ -1,0 +1,309 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.bodyAngular {
+    position: relative;
+    background-color: burlywood;
+    background-size: cover;
+}
+/*.myWebLogo:after {
+    content: '\f0ac';
+    font-family: FontAwesome;
+    padding-left: 10px;
+}*/
+
+.myWebLogo {
+    /*filter: invert(1);*/
+    /*background-color: antiquewhite;*/
+    background-color: white;
+    color: royalblue;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    box-shadow: 2px 2px 2px purple;
+    top: 3%;
+    left: 1%;
+    border-radius: 20%;
+    text-shadow: 1px 1px 1px silver;
+    border: none;
+    border-bottom: 1px solid;
+    padding: 5px;
+}
+/*after clicking card form picture css*/
+.cardFormPic {
+    width: 100%;
+    height: 250px;
+    padding: 20px;
+    position: relative;
+    margin-bottom: 30px;
+}
+/*after clicking card form css */
+.chooseCardPayment {
+    display: none;
+    background-color:  antiquewhite;
+    max-width: 500px;
+    margin: 20px auto;
+    height: auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px black;
+    position:  fixed;
+    left: 47%;
+    top: 3%;
+    transform: translate(-47%,3%);
+    z-index: 3;
+}
+/*card form title css*/
+.chooseCardPayment h4{
+    text-align:center;
+    letter-spacing:2px;
+    margin-bottom:30px;
+    color: darksalmon;
+    
+}
+/*card form label css*/
+.formCard .label {
+    display: block;
+    margin-bottom: 6px;
+    text-align:center;
+
+}
+/*card form input css*/
+.formCard .input {
+    padding: 13px;
+    width: 100%;
+    height: 4%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 5px;
+    font: 17px;
+    outline: none;
+}
+/*input inside card form show arrows up down always*/
+.formCard input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
+/*card form group2 css*/
+.formCard .cardGroup2 {
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    white-space: nowrap;
+    font-size: 18px;
+    position:center;
+}
+/*passengers label css*/
+.formCard .passengers {
+    width: 15%;
+    margin-right: 40%
+}
+/*card form input css*/
+.formCard .cardItem {
+    width: 13%;
+    height: 4%;
+    position:relative;
+}
+/*space for the elements inside card form*/
+.space{
+    margin-bottom:20px;   
+}
+
+/*.icon-relative{
+    position:relative;   
+}*/
+/*card form css for buttons*/
+.formCard .btnGroup {
+    display: flex;
+    position: center;
+    justify-content: space-between;
+}
+/*css for button buy*/
+.formCard .cardBtnBuy {
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px darkred;
+    background-color: forestgreen;
+    align-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: antiquewhite;
+    height: 55px;
+    width: 35%;
+    opacity: 0.7;
+}
+/*css for button back*/
+.formCard .cardBtnBak {
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px darkred;
+    background-color: darkred;
+    align-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: palegoldenrod;
+    height: 55px;
+    width: 35%;
+    opacity: 0.7;
+}
+.formCard button:hover {
+    opacity: 2 ;
+    cursor:pointer;
+    
+}
+/*cards css*/
+.card-img-top {
+    width: 100vw;
+    height: 40vh;
+    object-fit: cover;
+}
+
+.card-group {
+    width: 70%;
+    margin: auto;
+    height: auto;
+}
+.card:hover {
+    background-color: antiquewhite;
+    cursor: pointer;
+    color: deepskyblue;
+}
+.card {
+    width: 300px;
+    flex: initial;
+    position: center;
+    box-shadow: 0 4px 8px 0 deepskyblue;
+    margin: 5%;
+    padding:5px;
+}
+ /*remove thead border lines after clicking login button*/
+.login:focus {
+    outline: none;
+}
+/*login button css*/
+.login {
+    /*filter: invert(1);*/
+    /*background-color: Transparent;*/
+    outline: none;
+    line-height: normal;
+    background-color: cornflowerblue;
+    color: darkblue;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    padding: 16px 20px;
+    cursor: pointer;
+    opacity: 0.8;
+    position: absolute;
+    top: 3vh;
+    right: 3vh;
+    height: 55px;
+    width: 70px;
+    font-size: 15px;
+    /*makes the button round*/
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 2px darkgreen;
+}
+/*my website link css*/
+.ely {
+    color: darkblue;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 20px;
+}
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: absolute;
+    margin: auto;
+    left: 47%;
+    top: 3%;
+    transform: translate(-47%,3%);
+    /*align-items:center;*/
+    justify-content:space-around;
+    border: 1px solid #666;
+    box-shadow: 2px 2px 4px black;
+    z-index: 3;
+   
+}
+/* Add styles to the form container */
+.form-container {
+    height: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: white;
+    margin-bottom: 0;
+}
+    /* Full-width input fields */
+    .form-container input[type=text], .form-container input[type=password], .form-container input[type=email], .form-container input[type=number] {
+        width: 100%;
+        /*height:100%;*/
+        padding: 5px;
+        margin: 5px 0 15px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+    /* When the inputs get focus, do something */
+    .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+/* Set a style for the submit/login button */
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 15px;
+        opacity: 0.8;
+    }
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+/*links at the end of the page for other websites css*/
+.crossLinking-box-item {
+    padding: 4px;
+    display: block;
+}
+.crossLinking {
+    position: relative;
+    bottom: 2px;
+    left: 2px;
+    text-align: center;
+    width: 260px;
+    margin: 21px;
+}
+/*form for a flight search css *not finished*/
+.section-center {
+    /*filter: invert(1);*/
+    background-color: darkmagenta;
+    width: 65%;
+    margin: auto;
+    /*to round the sides*/
+    border-radius: 65px;
+    padding: 20px;
+    color: cyan;
+    text-shadow: 2px 2px 4px chartreuse;
+    box-shadow: 2px 2px 4px antiquewhite;
+    font-size: 15px;
+}
+/*change to opposite all colors of the web page*/
+/*html{ 
+    filter:invert(1);
+}*/

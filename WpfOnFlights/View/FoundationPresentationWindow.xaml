@@ -1,0 +1,41 @@
+﻿<Window x:Class="WpfOnFlights.FoundationPresentationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfOnFlights"
+        mc:Ignorable="d"
+        Title="FoundationPresentationWindow" Height="600" Width="750">
+    <Window.Resources>
+        <!--<local:MainWindowViewModel x:Key ="vm" />-->
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="234,34,288,188">
+            <StackPanel Orientation="Vertical" Margin="0,0,0,124">
+                <Label Content="Airline Companies"/>
+                <Label Content="Customers"/>
+                <Label Content="Flight Per Company"/>
+                <Label Content="Tickets Per Customer"/>
+                <Label Content="Countries"/>
+                <!--<Label Content="Administrators"/>-->
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2,0,5,124" Width="117">
+                <TextBox Width="50" Margin="0" FontWeight="Bold" Height="22" Text="{Binding AirlinesToAdd}" x:Name="AirlineCompanies"/>
+                <TextBox Width="50" Margin="2" FontWeight="Bold" Height="22" Text="{Binding CustomerToAdd}" x:Name="Customers"/>
+                <TextBox Width="50" Margin="2" FontWeight="Bold" Height="22" Text="{Binding FlightsToAdd}"  x:Name="FlightPerCompany"/>
+                <TextBox Width="50" Margin="2" FontWeight="Bold" Height="22" Text="{Binding TicketsToAdd}" x:Name="TicketsPerCustomer"/>
+                <TextBox Width="50" Margin="3" FontWeight="Bold" Height="22" Text="{Binding CountriesToAdd}" x:Name="Countries" />
+                <!--<TextBox Width="50" Margin="0" FontWeight="Bold" Height="22" Text="{Binding CustomerToAdd}" x:Name="Administrators"/>-->
+            </StackPanel>
+
+        </StackPanel>
+        <Button Content="Add to DB" Command="{Binding AddToDBCommand}" HorizontalAlignment="Left" Margin="509,53,0,0" VerticalAlignment="Top" Width="122"/>
+        <Button Content="Replace DB" Command="{Binding ReplaceDBCommand}" HorizontalAlignment="Left" Margin="509,126,0,0" VerticalAlignment="Top" Width="122"/>
+        <TextBlock Name="downloader" FontSize="15" HorizontalAlignment="Left" Margin="78,229,0,0" TextWrapping="Wrap" Text="94% complete" VerticalAlignment="Top" Height="26" Width="103"/>
+        <ProgressBar HorizontalAlignment="Left" Height="38" Margin="190,271,0,0" Value="94" VerticalAlignment="Top" Width="473"/>
+        <Label Content="Logging:" FontSize="20" HorizontalAlignment="Left" Margin="78,361,0,0" VerticalAlignment="Top" Width="103"/>
+        <TextBox HorizontalAlignment="Left"  BorderThickness="2" Height="116" Margin="62,403,0,0" TextWrapping="Wrap" FontSize="13" Text="Logging info" VerticalAlignment="Top" Width="633"/>
+
+
+    </Grid>
+</Window>

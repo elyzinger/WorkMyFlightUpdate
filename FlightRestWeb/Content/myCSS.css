@@ -1,0 +1,140 @@
+﻿body {
+    background-image: url("flight.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+}
+.departure:after {
+    content: '\f5b0';
+    font-family: FontAwesome;
+    padding-left: 10px;
+}
+.arriving:after {
+    content: '\f5af';
+    font-family: FontAwesome;
+    padding-left: 10px;
+}
+.search:after {
+    content: '\f002';
+    font-family: FontAwesome;
+    padding-left: 5px;
+}
+.myweb:after {
+    content: '\f0ac';
+    font-family: FontAwesome;
+    padding-left: 10px;
+}
+.badge.myweb {
+    background-color: ghostwhite;
+    color:royalblue;
+    font-weight: bold;
+    font-size:25px;
+}
+.orangeLanding{
+    background-color: orange;
+}
+.finalNotFinalLanding{
+    background-color:green;
+}
+/*.redDepart:hover {
+    width: 300px;
+    transition: width 2s;*/
+}
+.greenDepart {
+    background-color: #8CDD81;
+    color: black;
+}
+.redDepart {
+    background-color: palevioletred;
+    /*color: black;*/
+    text-shadow: 1px 1px 3px white;
+}
+/*.greenDepart::after {
+    content: '\f638';
+    font-family: FontAwesome;
+    padding-left: 5px;*/
+}
+.table.table-dark {
+    text-shadow: 1px 1px 3px white;
+
+}
+table.table-dark tr:nth-child(odd) {
+    background-color: darkgray;
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+}
+
+table.table-dark tr:nth-child(even) {
+    background-color: lightgray;
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+}
+    /*table.table-dark tr {
+        font-weight: bold;
+        font-size: 15px;
+        background-color: gray;
+        color: black;
+       
+    }*/
+table.table-dark th {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: gray;
+    color: darkblue;
+}
+   
+.mynav {
+    color: black;
+    font-size: 17px;
+    tab-size: 20PX;
+    font-weight: bold;
+}
+.btn.btnsearch:after {
+    content: '\f002';
+    font-family: FontAwesome;
+    padding-left: 5px;
+}
+.btn.btnsearch {
+    background-color: antiquewhite;
+}
+
+.pageName:after {
+    content: '\f002';
+    font-family: FontAwesome;
+    padding-left: 10px;
+    color:black;
+}
+
+/*.pageName:before {
+    content: '\f06e';
+    font-family: FontAwesome;
+    padding-right: 10px;
+    color: darkblue;
+}*/
+.chkbox2:after {
+    content: '\f5b0';
+    font-family: FontAwesome;
+    padding-bottom: 8px;
+}
+.chkbox1{
+    padding-right: 10px;
+}
+.chkbox1:after {
+    content: '\f5af';
+    font-family: FontAwesome;
+    padding-bottom:8px;
+}
+.checkBall {
+    font-size: larger;
+    background-color:none;
+}
+.form-control.inpSrch:empty {
+    background-color:antiquewhite;  
+}
+.custom-select.listSrch{
+    background-color:antiquewhite;
+}
