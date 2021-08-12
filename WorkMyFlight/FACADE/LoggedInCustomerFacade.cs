@@ -28,6 +28,47 @@ namespace WorkMyFlight
             }
             return customerflights;
         }
+        // get customer by user name
+        public Customer GetCustomerProfile(LoginToken<Customer> token, string userName)
+        {
+            Customer customer = new Customer();
+            if (ValidUserToken(token))
+            {
+                customer = _customerDAO.GetCustomerByUserName(userName);
+                if (customer == null)
+                    return null;
+                return customer;
+
+            }
+            return null;
+        }
+        // updating the info of a customer the system
+        // updating the table in the database
+        public void UpdateCustomerProfile(LoginToken<Customer> token, Customer customer)
+        {
+            if (ValidUserToken(token))
+            {
+                _customerDAO.Update(customer);
+            }
+        }
+        // delete an existing customer
+        // first delete from ticktes after delete the customer
+        // remove from data base
+        public void RemoveCustomerProfile(LoginToken<Customer> token, Customer customer)
+        {
+            if (ValidUserToken(token))
+            {
+                IList<Ticket> tickets = _ticketDAO.GetAll();
+                foreach (Ticket t in tickets)
+                {
+                    if (t.CustomerID == customer.ID)
+                    {
+                        _ticketDAO.Remove(t);
+                    }
+                }
+                _customerDAO.Remove(customer);
+            }
+        }
         // create a new ticket on database
         public Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight)
         {
@@ -49,7 +90,6 @@ namespace WorkMyFlight
                 throw new NoMoreTicketsException("no more tickets left");
             }
             return ticket;
-            
         }
         // cheack for real customer every func
         public bool ValidUserToken(LoginToken<Customer> token)

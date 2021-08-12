@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WorkMyFlight
 {
-    
-    public class AirLineCompany: IPoco, IUser
+
+    public class AirLineCompany : IPoco, IUser
     {
         public long ID { get; set; }
         public string AirLineName { get; set; }
@@ -16,6 +16,8 @@ namespace WorkMyFlight
         public long CountryCode { get; set; }
         public string CountryName { get; set; }
         public string Email { get; set; }
+        public string Guide { get; set; }
+        public DateTime RegDate { get; set; }
 
         public AirLineCompany()
         {

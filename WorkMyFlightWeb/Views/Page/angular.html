@@ -22,12 +22,14 @@
 <body class="bodyAngular">
     <h1><span class="myWebLogo">Work My Flight <img src="../../Content/airlineLogo/logo1.jpg" style="height:23px; width:25px; border-radius:50%;" /> </span></h1>
     <nav class="nav nav-pills justify-content-center flex-column flex-sm-row mynav">
-        <h4> <a class="nav-link home active" title="home" href="http://localhost:61909/page/Angular">Home <i class="fas fa-home"></i> </a> </h4>
-        <h4> <a class="nav-link departure " title="create customer" href="http://localhost:61909/page/GetDeparturesFlights"> Create Customer</a> </h4>
-        <h4> <a class="nav-link arriving" title="create airline" href="http://localhost:61909/page/GetLandingFlights"> Create Airline</a> </h4>
+        <h4> <a class="nav-link home " title="home" href="http://localhost:3000/">Home <i class="fas fa-home"></i> </a> </h4>
+        <h4> <a class="nav-link deals active" title="create customer" href="http://localhost:61909/page/Angular"> Deals </a> </h4>
+        <h4> <a class="nav-link departure " title="create customer" href="http://localhost:61909/page/GetDeparturesFlights"> Departures </a> </h4>
+        <h4> <a class="nav-link arriving" title="create airline" href="http://localhost:61909/page/GetLandingFlights"> Arrivels </a> </h4>
+        <button class="nav-link login" ng-click="openFormLogin()"> Login </button>
     </nav>
     <!-- login form -->
-    <button class="open-button login" ng-click="openFormLogin()"> Login </button>
+    <!--<button class="open-button login" ng-click="openFormLogin()"> Login </button>-->
     <div class="form-popup" id="login">
         <form ng-submit="SubmitLogin()" class="form-container">
             <h1> Login</h1>

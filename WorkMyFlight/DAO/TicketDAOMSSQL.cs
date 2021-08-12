@@ -16,32 +16,41 @@ namespace WorkMyFlight
         public long ADD(Ticket t)
         {
             SqlCommand cmd2 = new SqlCommand();
-      
+            
+
             lock (key)
             {
 
                 {
-                    using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                    try
                     {
-                        cmd.Connection.Open();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = $"SELECT COUNT(*) FROM Tickets WHERE FLIGHT_ID = {t.FlightID} AND CUSTOMER_ID = {t.CustomerID}";
-                        string res = cmd.ExecuteScalar().ToString();
-                        if (res != "0")
-                            throw new AlreadyExistException($"Ticket for customer id {t.CustomerID} already exists");
-                        cmd.Connection.Close();
+                        using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                        {
+                            cmd.Connection.Open();
+                            cmd.CommandType = CommandType.Text;
+                            cmd.CommandText = $"SELECT COUNT(*) FROM Tickets WHERE FLIGHT_ID = {t.FlightID} AND CUSTOMER_ID = {t.CustomerID}";
+                            string res = cmd.ExecuteScalar().ToString();
+                            if (res != "0")
+                                throw new AlreadyExistException($"Ticket for customer id {t.CustomerID} already exists");
+                            cmd.Connection.Close();
 
+                        }
+                        using (cmd2.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                        {
+                            cmd2.Connection.Open();
+                            cmd2.CommandType = CommandType.Text;
+                            cmd2.CommandText = $"INSERT INTO Tickets(FLIGHT_ID, CUSTOMER_ID) values({ t.FlightID}, { t.CustomerID});" +
+                            $"SELECT ID FROM Tickets WHERE FLIGHT_ID = {t.FlightID} AND CUSTOMER_ID = {t.CustomerID}";
+
+                            t.ID = (long)cmd2.ExecuteScalar();
+                        }
                     }
-                    using (cmd2.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                    catch (Exception e)
                     {
-                        cmd2.Connection.Open();
-                        cmd2.CommandType = CommandType.Text;
-                        cmd2.CommandText = $"INSERT INTO Tickets(FLIGHT_ID, CUSTOMER_ID) values({ t.FlightID}, { t.CustomerID});"+
-                        $"SELECT ID FROM Tickets WHERE FLIGHT_ID = {t.FlightID} AND CUSTOMER_ID = {t.CustomerID}";
-
-                        t.ID = (long)cmd2.ExecuteScalar();
+                        return t.ID;
                     }
                     return t.ID;
+                  
                 }
             }
         }

@@ -16,8 +16,16 @@ namespace WorkMyFlight
             if (ValidUserToken(token))
             {
                airline.ID = _airlineDAO.ADD(airline);
+                _airlineDAO.RemoveSignedUpAirline(airline);
             }
             return airline.ID;
+        }
+        public void RemoveAirlineFromSignup(LoginToken<Administrator> token, AirLineCompany airline)
+        {
+            if (ValidUserToken(token))
+            {
+                _airlineDAO.RemoveSignedUpAirline(airline);
+            }
         }
         // create new customer and add it to the table and take id out
         public long CreateNewCustomer(LoginToken<Administrator> token, Customer customer)
@@ -105,6 +113,26 @@ namespace WorkMyFlight
             }
             return airlines;
         }
+        // get all airline customers from db
+        public IList<Customer> GetAllCustomers(LoginToken<Administrator> token)
+        {
+            IList<Customer> custumers = new List<Customer>();
+            if (ValidUserToken(token))
+            {
+                return custumers = _customerDAO.GetAll();
+            }
+            return custumers;
+        }
+        // get all signeup airlines companies from db
+        public IList<AirLineCompany> GetAllSignedUpAirlineCompanies(LoginToken<Administrator> token)
+        {
+            IList<AirLineCompany> airlines = new List<AirLineCompany>();
+            if (ValidUserToken(token))
+            {
+                return airlines = _airlineDAO.GetAllSignedUpAirlineCompaniesFromDB();
+            }
+            return airlines;
+        }
         // get country name from db by name
         public string GetCountryNameByName(LoginToken<Administrator> token, string countryName)
         {
@@ -132,6 +160,20 @@ namespace WorkMyFlight
                 return null;
             return customer.UserName;
         }
+        // get cystomer by user name
+        public Customer GetCustomer(LoginToken<Administrator> token, string userName)
+        {
+            Customer customer = new Customer();
+            if (ValidUserToken(token))
+            {
+                customer = _customerDAO.GetCustomerByUserName(userName);
+                if (customer == null)
+                    return null;
+                return customer;
+
+            }
+            return null;
+        }
         // get airline user name from db by user name
         public string GetAirlineUserName(LoginToken<Administrator> token, string userName)
         {
@@ -148,6 +190,15 @@ namespace WorkMyFlight
                 return null;
             return airLine.UserName;
 
+        }
+        public IList<AirLineCompany> GetAirlineSignIn(LoginToken<Administrator> token)
+        {
+             IList < AirLineCompany > signInList = new List<AirLineCompany>();
+            if (ValidUserToken(token))
+            {
+                return signInList = _airlineDAO.GetAll();
+            }
+            return signInList;
         }
         // cheack for real admin every func
         public bool ValidUserToken(LoginToken<Administrator> token)

@@ -35,6 +35,20 @@ namespace WorkMyFlight
             }
        
         }
+        // get airline by user name
+        public AirLineCompany GetAirlineProfile(LoginToken<AirLineCompany> token, string userName)
+        {
+            AirLineCompany airline = new AirLineCompany();
+            if (ValidUserToken(token))
+            {
+                airline = _airlineDAO.GetAirlineByUsername(userName);
+                if (airline == null)
+                    return null;
+                return airline;
+
+            }
+            return null;
+        }
         // create a new flight for airline in db
         public long CreateFlight(LoginToken<AirLineCompany> token, Flight flight)
         {

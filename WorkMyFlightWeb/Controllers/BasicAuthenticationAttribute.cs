@@ -1,4 +1,5 @@
 ﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ using WorkMyFlight;
 
 namespace WorkMyFlightWeb.Controllers
 {
+  
     public class BasicAuthenticationAttribute : /*AuthorizeAttribute*/AuthorizationFilterAttribute
     {
         int userIsBlocked = 0;
+        // when you send name and password in the header.authorization request the information goes throw here 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
 
@@ -35,7 +38,7 @@ namespace WorkMyFlightWeb.Controllers
                 string username = usernamePasswordArray[0];
                 string password = usernamePasswordArray[1];
 
-
+                // check the type of token we get
                 FlyingCenterSystem fcs = FlyingCenterSystem.GetInstance();
                 try
                 {

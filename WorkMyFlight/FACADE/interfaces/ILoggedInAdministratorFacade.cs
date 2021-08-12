@@ -14,5 +14,9 @@ namespace WorkMyFlight
         long CreateNewCustomer(LoginToken<Administrator> token, Customer customer);
         void UpdateCustomerDetails(LoginToken<Administrator> token, Customer customer);
         void RemoveCustomer(LoginToken<Administrator> token, Customer customer);
+        IList<AirLineCompany> GetAllSignedUpAirlineCompanies(LoginToken<Administrator> token);
+        IList<AirLineCompany> GetAllAirlineCompanies(LoginToken<Administrator> token);
+        void RemoveAirlineFromSignup(LoginToken<Administrator> token, AirLineCompany airline);
+        IList<Customer> GetAllCustomers(LoginToken<Administrator> token);
     }
 }

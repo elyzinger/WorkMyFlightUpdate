@@ -22,34 +22,35 @@ namespace WorkMyFlight
             {
 
                 {
-                    using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
-                    {
-                        cmd.Connection.Open();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = $"SELECT COUNT(*) FROM Customers WHERE USER_NAME = '{t.UserName}' OR EXISTS (SELECT USER_NAME FROM AirlineCompanies WHERE USER_NAME = '{t.UserName}')";
-                        string res = cmd.ExecuteScalar().ToString();
-                        if (res != "0")
-                            throw new AlreadyExistException($"Customers user name {t.UserName} already exists");
-                        cmd.Connection.Close();
+                    
+                        using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                        {
+                            cmd.Connection.Open();
+                            cmd.CommandType = CommandType.Text;
+                            cmd.CommandText = $"SELECT COUNT(*) FROM Customers WHERE USER_NAME = '{t.UserName}' OR EXISTS (SELECT USER_NAME FROM AirlineCompanies WHERE USER_NAME = '{t.UserName}')";
+                            string res = cmd.ExecuteScalar().ToString();
+                            if (res != "0")
+                                throw new AlreadyExistException($"Customers user name {t.UserName} already exists");
+                            cmd.Connection.Close();
 
-                    }
-                    using (cmd2.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
-                    {
-                        cmd2.Connection.Open();
-                        cmd2.CommandType = CommandType.Text;
-                        cmd2.CommandText = $"INSERT INTO Customers(FIRST_NAME, LAST_NAME, USER_NAME, PASSWORD, ADDRESS, PHONE_NUMBER, CREDIT_CARD_NUMBER, EMAIL )" +
-                        $"values('{ t.FirstName}', '{ t.LastName}', '{ t.UserName}', '{ t.Password}','{ t.Address}', '{ t.PhoneNumber}', '{ t.CreditCardNumber}', '{t.Email}');"+
-                        $"SELECT ID FROM Customers WHERE USER_NAME = '{t.UserName}'";
-          
-                        t.ID = (long)cmd2.ExecuteScalar();
-                    }
+                        }
+                        using (cmd2.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+                        {
+                            cmd2.Connection.Open();
+                            cmd2.CommandType = CommandType.Text;
+                            cmd2.CommandText = $"INSERT INTO Customers(FIRST_NAME, LAST_NAME, USER_NAME, PASSWORD, ADDRESS, PHONE_NUMBER, CREDIT_CARD_NUMBER, EMAIL )" +
+                            $"values('{ t.FirstName}', '{ t.LastName}', '{ t.UserName}', '{ t.Password}','{ t.Address}', '{ t.PhoneNumber}', '{ t.CreditCardNumber}', '{t.Email}');" +
+                            $"SELECT ID FROM Customers WHERE USER_NAME = '{t.UserName}'";
 
+                            t.ID = (long)cmd2.ExecuteScalar();
+                        }
                     return t.ID;
+                    
                 }
             }
         }
-        // adding a new user to db before email authentication before adding as a customer 
-        public bool AddNewUser(NewUser newUser)
+        // adding a new customer to db before email authentication before adding as a customer 
+        public bool AddNewCustomerDB(Customer newCustomer)
         {
         
             bool wasAdded = true;
@@ -65,7 +66,7 @@ namespace WorkMyFlight
 
                         cmd.Connection.Open();
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = $"INSERT INTO SignUp(USER_NAME, EMAIL, TYPE, EMAIL_CON, GUID) values ('{newUser.UserNAME}', '{newUser.Email}', '{newUser.Type}', '{emailConfirmed}','{newUser.Guid}')";
+                        cmd.CommandText = $"INSERT INTO SignUp(USER_NAME, FIRST_NAME, LAST_NAME, PASSWORD, ADDRESS, PHONE_NUMBER, CREDIT_CARD_NUMBER, EMAIL, GUID) values ('{newCustomer.UserName}', '{newCustomer.FirstName}', '{newCustomer.LastName}', '{emailConfirmed}','{newCustomer.Password}','{newCustomer.Address}'),'{newCustomer.PhoneNumber}','{newCustomer.CreditCardNumber}','{newCustomer.Email}','{newCustomer.Password}','{newCustomer.Guide}'";
                         cmd.ExecuteNonQuery();
                     }
 
@@ -73,6 +74,7 @@ namespace WorkMyFlight
                 }
             }
         }
+    
         // adding a new user to db after email authentication before adding as a customer 
         public ConfirmedUser ConfirmEmail(string guid)
         {
@@ -159,9 +161,9 @@ namespace WorkMyFlight
             {
                 cmd.Connection.Open();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = $"SELECT * FROM Csutomres";
+                cmd.CommandText = $"SELECT * FROM Customers";
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
 
                 {
                     while (reader.Read())
@@ -176,7 +178,8 @@ namespace WorkMyFlight
                             Password = (string)reader["PASSWORD"],
                             Address = (string)reader["ADDRESS"],
                             PhoneNumber = (string)reader["PHONE_NUMBER"],
-                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"]
+                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                            Email = (string)reader["EMAIL"]
 
                         };
 
@@ -190,8 +193,8 @@ namespace WorkMyFlight
         // get customer from db by username
         public Customer GetCustomerByUserName(string username)
         {
-            Customer c = null;
-            c = null;
+            Customer customer = null;
+           
             using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
             {
                 cmd.Connection.Open();
@@ -213,19 +216,21 @@ namespace WorkMyFlight
                             LastName = (string)reader["LAST_NAME"],
                             Address = (string)reader["ADDRESS"],
                             PhoneNumber = (string)reader["PHONE_NUMBER"],
-                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"]
+                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                            Email = (string)reader["EMAIL"]
                         };
-                        c = a;
+                        customer = a;
                     }
                     
                 }
             }
-            if(c == null)
+            if(customer == null)
             {
                 return null;
             }
-            return c;
-      
+            return customer;
+
+
         }
         
         // delete a customer from db
@@ -244,11 +249,23 @@ namespace WorkMyFlight
         // update a customer inside db
         public void Update(Customer t)
         {
+            //SqlCommand cmd2 = new SqlCommand();
+            //using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
+            //{
+            //    cmd.Connection.Open();
+            //    cmd.CommandType = CommandType.Text;
+            //    cmd.CommandText = $"SELECT COUNT(*) FROM Customers WHERE USER_NAME = '{t.UserName}' OR EXISTS (SELECT USER_NAME FROM AirlineCompanies WHERE USER_NAME = '{t.UserName}')";
+            //    string res = cmd.ExecuteScalar().ToString();
+            //    if (res != "1")
+            //        throw new AlreadyExistException($"Customers user name {t.UserName} already exists");
+            //    cmd.Connection.Close();
+
+            //}
             using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
             {
                 cmd.Connection.Open();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = $"UPDATE Customers SET FIRST_NAME = '{t.FirstName}',LAST_NAME = '{t.LastName}',USER_NAME = '{t.UserName}',PASSWORD = '{t.Password}',ADDRESS = '{t.Address}',PHONE_NUMBER = '{t.PhoneNumber}',CREDIT_CARD_NUMBER = '{t.CreditCardNumber}' ";
+                cmd.CommandText = $"UPDATE Customers SET FIRST_NAME = '{t.FirstName}',LAST_NAME = '{t.LastName}',USER_NAME = '{t.UserName}',PASSWORD = '{t.Password}',ADDRESS = '{t.Address}',PHONE_NUMBER = '{t.PhoneNumber}',CREDIT_CARD_NUMBER = '{t.CreditCardNumber}',EMAIL= '{t.Email}' WHERE ID = {t.ID} ";
 
                 cmd.ExecuteNonQuery();
             }

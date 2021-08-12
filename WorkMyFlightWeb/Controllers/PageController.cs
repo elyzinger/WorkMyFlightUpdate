@@ -24,12 +24,12 @@ namespace WorkMyFlightWeb.Controllers
         {
             return new FilePathResult("~/Views/Page/landing.html", "text/html");
         }
-        // GET: GetLandingFlights
+        // GET: get search page
         public ActionResult SearchFlights()
         {
             return new FilePathResult("~/Views/Page/search.html", "text/html");
         }
-        // GET: GetLandingFlights
+        // GET: get angular page
         public ActionResult Angular()
         {
             return new FilePathResult("~/Views/Page/angular.html", "text/html");     

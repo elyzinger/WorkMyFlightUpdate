@@ -17,8 +17,10 @@ namespace WorkMyFlight
         public long ADD(Flight t)
         {
             SqlCommand cmd2 = new SqlCommand();
-  
+              
           
+                {
+                try
                 {
                     using (cmd.Connection = new SqlConnection(FlightCenterConfig.DAO_CON))
                     {
@@ -42,7 +44,7 @@ namespace WorkMyFlight
                         cmd2.Connection.Open();
                         cmd2.CommandType = CommandType.Text;
                         cmd2.CommandText = $"INSERT INTO Flights(AIRLINE_COMPANY_ID, ORIGIN_COUNTRY_CODE, DESTINATION_COUNTRY_CODE, DEPARTURE_TIME, LANDING_TIME, REMANING_TICKETS)" +
-                        $"values({t.AirLineCompanyID}, {t.OriginCountryCode}, { t.DestinationCountryCode},'{ t.DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")}','{t.LandingTime.ToString("yyyy-MM-dd HH:mm:ss")}', {t.RemaniningTickets});"+
+                        $"values({t.AirLineCompanyID}, {t.OriginCountryCode}, { t.DestinationCountryCode},'{ t.DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")}','{t.LandingTime.ToString("yyyy-MM-dd HH:mm:ss")}', {t.RemaniningTickets});" +
                         $" SELECT ID FROM Flights WHERE AIRLINE_COMPANY_ID = {t.AirLineCompanyID}" +
                         $" AND ORIGIN_COUNTRY_CODE = {t.OriginCountryCode}" +
                         $" AND DESTINATION_COUNTRY_CODE = {t.DestinationCountryCode}" +
@@ -52,8 +54,13 @@ namespace WorkMyFlight
 
                         t.ID = (long)cmd2.ExecuteScalar();
                     }
-
+                }
+                catch (Exception e)
+                {
                     return t.ID;
+                }
+                return t.ID;
+                
                 }
             
         }

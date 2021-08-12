@@ -17,6 +17,8 @@ namespace WorkMyFlight
         public string PhoneNumber { get; set; }
         public string CreditCardNumber { get; set; }
         public string Email { get; set; }
+        public string Guide { get; set; }
+
         public Customer()
         {
         }

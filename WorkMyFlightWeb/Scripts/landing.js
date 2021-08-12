@@ -8,6 +8,8 @@ let flightsStorage = '';
 let statusColor = '';
 let status = '';
 let sqlDateStr = ''; // as for MySQL DATETIME
+
+// adding landin status
 function LandingeStatus(LandingTime) {
 
     timeNow = new Date();
@@ -30,6 +32,8 @@ function LandingeStatus(LandingTime) {
     }
     return status;
 }
+
+// adjust the color of the status 
 function LandingStatusColor(status) {
 
     if (status == 'LANDED') {
@@ -49,6 +53,8 @@ function LandingStatusColor(status) {
     }
     return statusColor;
 }
+
+ // adjust the time to be the same as sql
 function AdujstTime(LandingTime) {
     // compare my sql date to java script date
     sqlDateStr = LandingTime.toLocaleString().replace('T', ' '); // as for MySQL 
@@ -61,6 +67,8 @@ function AdujstTime(LandingTime) {
         parseInt(YMDhms[5]), 0/*msValue*/);
     return jsDate;
 }
+
+// adjust the time of the delayed flight
 function StatusDelay(delayDate) {
 
     let randomMin = Math.floor((Math.random() * 10 + 1) * 6);
@@ -76,13 +84,15 @@ function StatusDelay(delayDate) {
     return delayDate;
 
 }
+// online mode
 if (navigator.onLine) {
-
+    // saves the list of flights in local storage
     let lastOnLine = new Date();
     lastOnLine.setHours(lastOnLine.getHours() + 3);
     lastOnLine = lastOnLine.toUTCString().replace('GMT', ' ');
     jsonDate = JSON.stringify(lastOnLine);
     localStorage.setItem('lastOnLineLanding', jsonDate);
+    // get the flights from the landing api to the table
     $(document).ready(() => {
         $tableFlights = $("#flightsTable")
         $.ajax({
@@ -97,10 +107,11 @@ if (navigator.onLine) {
                         <th>AIR LINE NAME</th>
                         <th>FLIGHT ID</th>
                         <th>ORIGIN COUNTRY NAME</th>
-                        <th>DESTINATION COUNTRY NAME</th>
-                        <th>LandingTime</th>
-                        <th>Status</th>
+                        <th>DESTINATION COUNTRY NAME</th>   
+                        <th>LANDING TIME</th>
+                        <th>STATUS</th>
                         </tr>`)
+                
                 $.each(data, (i, oneFlight) => {
                     
                     oneFlight.LandingTime = oneFlight.LandingTime.toLocaleString().replace('T', ' '); /* DATETIME without T*/
@@ -117,7 +128,7 @@ if (navigator.onLine) {
                     flights.push(oneFlight);
                     
                     $tableFlights.append(
-                        `<tr> <td><img class="companyimage" src="../../Content/airlineLogo/${oneFlight.AirlineName}.jpg" alt="Logo" width="35" height="35"></td>
+                        `<tr> <td><img class="companyimage" src="https://logo.clearbit.com/${oneFlight.AirlineName}.com" alt="Logo" width="35" height="35"></td>
                              <td> ${oneFlight.AirlineName} </td>
                              <td>${oneFlight.ID}</td>
                              <td>${oneFlight.OriginCountryName}</td>
@@ -130,10 +141,17 @@ if (navigator.onLine) {
                 localStorage.setItem('landingFlights', jsonFlights);
 
             })
-            .catch((err) => { console.log(err) })
+            .catch((err) => {
+                if (err.status != undefined)
+                    alert(err.statusText);
+                else
+                    console.log(err)
+            })
     })
 }
+// offline mode
 else { reload(); }
+   // load the last online table from local storage
 function reload() {
     let lastDate = JSON.parse(localStorage['lastOnLineLanding']);
     swal.fire('No Connection', 'LastOnLine : ' + lastDate);

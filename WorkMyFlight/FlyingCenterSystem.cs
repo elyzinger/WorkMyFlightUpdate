@@ -17,6 +17,7 @@ namespace WorkMyFlight
          
         public FlyingCenterSystem()
         {
+            // every 3 hours moves all the flight that are 3 hours after datetime now
             new Task(() =>
             {
                 Move3HoursOldFlightsAndTickets();
@@ -38,7 +39,7 @@ namespace WorkMyFlight
             }
             return _instance;
         }
-
+        // return type of token
         public ILoginToken Login(string userName, string Password)
         {
             LoginService loginService = new LoginService();
@@ -57,7 +58,7 @@ namespace WorkMyFlight
             }
              throw new UserNotFoundException("user not found"); ;
         }
-
+        //return a type of facade 
         public IFacade GetFacade(ILoginToken loginToken)
         {
             // IloginToken is null - > user is Anonymous

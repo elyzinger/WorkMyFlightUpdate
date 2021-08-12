@@ -21,8 +21,10 @@ namespace WorkMyFlight
         IList<Flight> GetArrivingNow();
         IList<Flight> GetPromotionFlights();
         IList<Flight> GetFlightsBySearch(SearchParam search);
-        bool AddNewUser(NewUser newUser);
+        bool AddNewCustomer(Customer newUser);
+        bool AddNewAirline(AirLineCompany newUser);
         ConfirmedUser ConfirmMyEmail(string guid);
         long AddCustomerToData(Customer newCustomer);
+        IList<Country> GetAllCountries();
     }
 }

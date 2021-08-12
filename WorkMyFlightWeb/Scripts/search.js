@@ -1,4 +1,4 @@
-﻿//swal.fire('Search Page')
+﻿// take all the information from the search page and sends an api request
 function onSearchClick() {
     const data = {
         ID: null,
@@ -49,7 +49,7 @@ function onSearchClick() {
          
     }
     $("#flightTableSearch").empty();
-   
+   // sending an api request with all the info from the search func then we get back the table back from sql 
     {
         $.ajax({
             url: "/api/AnonymousFacade/SearchByParams",
@@ -71,7 +71,7 @@ function onSearchClick() {
             $.each(result, (i, searchFlight) => {
                 $("#flightTableSearch").append(
                     `<tr> +
-                    <td><img class="companyimage" src="../../Content/airlineLogo/${searchFlight.AirlineName}.jpg" alt="Logo" width="35" height="35"></td>
+                    <td><img class="companyimage" src="https://logo.clearbit.com/${searchFlight.AirlineName}.com" alt="Logo" width="35" height="35"></td>
                     <td> ${searchFlight.AirlineName} </td>
                     <td>${searchFlight.ID}</td>
                     <td>${searchFlight.OriginCountryName}</td>

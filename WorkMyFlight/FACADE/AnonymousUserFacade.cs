@@ -29,6 +29,11 @@ namespace WorkMyFlight
         {
             return _flightDAO.GetFlightById(id);
         }
+        //  get all countries
+        public IList<Country> GetAllCountries()
+        {
+            return _countryDAO.GetAll();
+        }
         //  get a flight by DepartrureDate
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
@@ -86,9 +91,13 @@ namespace WorkMyFlight
             return searchlist;
         }
         // add a new user 
-        public bool AddNewUser(NewUser newUser)
-        {            
-            return _customerDAO.AddNewUser(newUser);            
+        public bool AddNewCustomer(Customer newCustomer)
+        {
+            return _customerDAO.AddNewCustomerDB(newCustomer);
+        }
+        public bool AddNewAirline(AirLineCompany newAirline)
+        {
+            return _airlineDAO.AddNewAirlineDB(newAirline);
         }
         // confirming an email after reigster
         public ConfirmedUser ConfirmMyEmail(string guid)

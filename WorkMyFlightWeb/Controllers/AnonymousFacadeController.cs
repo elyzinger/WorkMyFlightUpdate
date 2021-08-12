@@ -4,41 +4,54 @@ using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WorkMyFlight;
 using WorkMyFlight.POCO;
 using WorkMyFlightWeb.Models;
 
+
 namespace WorkMyFlightWeb.Controllers
-{
-    //[EnableCors(origins: "http://localhost:56894", headers: "*", methods: "*")]
+{ 
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class AnonymousFacadeController : ApiController
     {
         private FlyingCenterSystem FCS;
         public static string guideForAuth = null;
-
+            
         // adding a customer user to reddis and adding him to db before creating him as a customer. and sending an email to him for confirmation
         [Route("api/AnonymousFacade/AddNewCustomerToRedis")]
         [ResponseType(typeof(Customer))]
         [HttpPost]        
         public IHttpActionResult AddNewCustomerToRedis([FromBody] Customer customer)
         {
-            bool redisBool = false;
-            redisBool = Redis.RedisSaveNewCustomer("localhost", customer.UserName, customer);
-            FCS = FlyingCenterSystem.GetInstance();
-            IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade; 
-
-            if (redisBool == false)
+            try
             {
-                return NotFound();
+                //bool redisBool = false;
+                //redisBool = Redis.RedisSaveNewCustomer("localhost", customer.UserName, customer);
+                FCS = FlyingCenterSystem.GetInstance();
+                IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
+
+                //if (redisBool == false)
+                //{
+                //    return NotFound();
+                //}
+                guideForAuth = Guid.NewGuid().ToString();
+                //NewUser customerUser = new NewUser { UserNAME = customer.UserName, Email = customer.Email, Guid = guideForAuth, Type = "customer"};
+                long customerID = af.AddCustomerToData(customer);
+                //SendEmail(customer.Email, customer.FirstName, guideForAuth);
+                if(customerID != 0)
+                return Ok(customerID);
+                else
+                    return Ok(customerID);
             }
-            guideForAuth = Guid.NewGuid().ToString();
-            NewUser customerUser = new NewUser { UserNAME = customer.UserName, Email = customer.Email, Guid = guideForAuth, Type = "customer"};
-            af.AddNewUser(customerUser);
-            SendEmail(customer.Email, customer.FirstName, guideForAuth);
-            return Ok(redisBool);
-            
+            catch(Exception e)
+            {
+                return Content(HttpStatusCode.NotAcceptable, $"{e.Message}");
+            }
+             
         }
         // adding a airline user to reddis and adding him to db before creating him as a airline. and sending an email to him for confirmation
         [Route("api/AnonymousFacade/AddNewAirlineToRedis")]
@@ -46,21 +59,29 @@ namespace WorkMyFlightWeb.Controllers
         [HttpPost]        
         public IHttpActionResult AddNewAirlineToRedis([FromBody] AirLineCompany airline)
         {
-            bool redisBool = false;
-            //var jsonStringAccount = Newtonsoft.Json.JsonConvert.SerializeObject(airline);
-            redisBool = Redis.RedisSaveNewAirline("localhost", airline.UserName, airline);
-            FCS = FlyingCenterSystem.GetInstance();
-            IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;       
-
-            if (redisBool == false)
+            try
             {
-                return NotFound();
+                bool redisBool = true;
+                //var jsonStringAccount = Newtonsoft.Json.JsonConvert.SerializeObject(airline);
+                // redisBool = Redis.RedisSaveNewAirline("localhost", airline.UserName, airline);
+                FCS = FlyingCenterSystem.GetInstance();
+                IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
+
+                if (redisBool == false)
+                {
+                    return NotFound();
+                }
+                guideForAuth = Guid.NewGuid().ToString();
+                
+                //NewUser airlinerUser = new NewUser { UserNAME = airline.UserName, Email = airline.Email, Guid = guideForAuth, Type = "airline" };
+                bool wasAdded = af.AddNewAirline(airline);
+                //SendEmail(airline.Email, airline.AirLineName, guideForAuth);
+                return Ok(wasAdded);
             }
-            guideForAuth = Guid.NewGuid().ToString();
-            NewUser airlinerUser = new NewUser { UserNAME = airline.UserName, Email = airline.Email, Guid = guideForAuth, Type = "airline" };
-            af.AddNewUser(airlinerUser);
-            SendEmail(airline.Email, airline.AirLineName, guideForAuth);
-            return Ok(redisBool);
+            catch(Exception e)
+            {
+                 return Content(HttpStatusCode.NotAcceptable, $"{e.Message}");
+            }
         }
         // get all flights that lands now
         [Route("api/AnonymousFacade/GetLandingNow")]
@@ -75,19 +96,6 @@ namespace WorkMyFlightWeb.Controllers
                 return NotFound();
             return Ok(flighs);
         }
-        // get future flights for promotion
-        [Route("api/AnonymousFacade/GetFutureFlights")]
-        [ResponseType(typeof(Flight))]
-        [HttpGet]
-        public IHttpActionResult GetFutureFlights()
-        {
-            FCS = FlyingCenterSystem.GetInstance();
-            IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
-            IList<Flight> flighs = (List<Flight>)af.GetPromotionFlights();
-            if (flighs.Count == 0)
-                return NotFound();
-            return Ok(flighs);
-        }
         //get all flights that depart now
         [Route("api/AnonymousFacade/GetDeparturesNow")]
         [ResponseType(typeof(Flight))]
@@ -97,6 +105,40 @@ namespace WorkMyFlightWeb.Controllers
             FCS = FlyingCenterSystem.GetInstance();
             IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
             IList<Flight> flighs = (List<Flight>)af.GetDepartingNow();
+            if (flighs.Count == 0)
+                return NotFound();
+            return Ok(flighs);
+        }
+        // get all countries from db
+        [Route("api/AnonymousFacade/GetCountries")]
+        [ResponseType(typeof(Country))]
+        [HttpGet]
+        public IHttpActionResult GetAllCountries()
+        {
+            try
+            {
+                FCS = FlyingCenterSystem.GetInstance();
+                IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
+                IList<Country> countries = (List<Country>)af.GetAllCountries();
+                if (countries.Count != 0)
+                    return Ok(countries);
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.NotAcceptable, $"{e.Message}");
+            }      
+                return StatusCode(HttpStatusCode.NotFound);
+            
+        }
+        // get future flights for promotion
+        [Route("api/AnonymousFacade/GetFutureFlights")]
+        [ResponseType(typeof(Flight))]
+        [HttpGet]
+        public IHttpActionResult GetFutureFlights()
+        {
+            FCS = FlyingCenterSystem.GetInstance();
+            IAnonymousUserFacade af = FCS.GetFacade(null) as AnonymousUserFacade;
+            IList<Flight> flighs = (List<Flight>)af.GetPromotionFlights();
             if (flighs.Count == 0)
                 return NotFound();
             return Ok(flighs);
